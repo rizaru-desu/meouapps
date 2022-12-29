@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, Text, StyleSheet} from 'react-native';
 
 class Panel extends Component {
   constructor(props) {
@@ -9,11 +9,19 @@ class Panel extends Component {
 
   render() {
     return (
-      <View>
+      <SafeAreaView style={Styles.container}>
         <Text> panel </Text>
-      </View>
+      </SafeAreaView>
     );
   }
 }
+
+const Styles = StyleSheet.create({
+  /* Setting the background color of the screen to white. */
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
 export default Panel;

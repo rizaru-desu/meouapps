@@ -75,12 +75,14 @@ export const getUpdates = () => async dispatch => {
         if (versionCode !== snapshot.val()) {
           dispatch(isUpdate());
         } else {
-          const user = auth().currentUser;
-          if (user) {
-            console.log('login');
-          } else {
-            replace('panel');
-          }
+          setTimeout(() => {
+            const user = auth().currentUser;
+            if (user) {
+              console.log('login');
+            } else {
+              replace('panel');
+            }
+          }, 5000);
         }
       });
   } catch (error) {
