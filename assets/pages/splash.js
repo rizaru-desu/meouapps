@@ -21,6 +21,7 @@ import {AlertDownloader, AlertModal, AlertUpdatesModal} from '../components';
 import {connect} from 'react-redux';
 import {getDownlod, getUpdates} from '../redux/splashSlices';
 
+/* This is a library that helps you to check and request for permissions. */
 import {
   checkMultiple,
   PERMISSIONS,
