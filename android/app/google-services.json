@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1080388130833",
+    "firebase_url": "https://all-information-data-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "all-information-data",
+    "storage_bucket": "all-information-data.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080388130833:android:81761dc7e67512980479b0",
+        "android_client_info": {
+          "package_name": "com.rizapps.meou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080388130833-drb2shfkfd9v7q6nks17ck7djc31v9kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASWMktYNNF2XnabuS0y_ndDuFloJAjoLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080388130833-drb2shfkfd9v7q6nks17ck7djc31v9kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
