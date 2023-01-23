@@ -1,8 +1,8 @@
 /* Importing the `createSlice` function from the `@reduxjs/toolkit` package. */
 import {createSlice} from '@reduxjs/toolkit';
 
-/* Importing the database from the firebase. */
-import database from '@react-native-firebase/database';
+/* Importing the firestore module from the firebase. */
+import firestore from '@react-native-firebase/firestore';
 
 /* Importing the authentication module from the firebase. */
 import auth from '@react-native-firebase/auth';
@@ -55,35 +55,45 @@ export const SplashSlices = createSlice({
     isCurrentSize: (state, action) => {
       state.setCurrentSize = action.payload.setCurrentSize;
     },
+
+    isDissmissAlert: state => {
+      state.setAlert = false;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {isAlert, isUpdate, isDownload, isTotalSize, isCurrentSize} =
-  SplashSlices.actions;
+export const {
+  isAlert,
+  isUpdate,
+  isDownload,
+  isTotalSize,
+  isCurrentSize,
+  isDissmissAlert,
+} = SplashSlices.actions;
 
 export const getUpdates = () => async dispatch => {
   try {
-    /* Checking the versionCode of the app and comparing it to the versionCode in the database. If the
-    versionCode is different, it will dispatch the isUpdate action. If the versionCode is the same,
-    it will check if the user is logged in. If the user is logged in, it will log in the console. If
-    the user is not logged in, it will replace the screen with the panel screen. */
-    database()
-      .ref('/config/versionCode')
-      .once('value')
-      .then(snapshot => {
-        if (versionCode !== snapshot.val()) {
+    firestore()
+      .collection('config')
+      .doc('VneqyZytPyeySZsohS6l')
+      .get()
+      .then(querySnapshot => {
+        if (versionCode !== querySnapshot.get('VersionCode')) {
           dispatch(isUpdate());
         } else {
           setTimeout(() => {
             const user = auth().currentUser;
             if (user) {
-              console.log('login');
+              replace('dashboard');
             } else {
               replace('panel');
             }
           }, 5000);
         }
+      })
+      .catch(error => {
+        dispatch(isAlert({setMessage: error.message}));
       });
   } catch (error) {
     dispatch(isAlert({setMessage: error.message}));
@@ -92,11 +102,11 @@ export const getUpdates = () => async dispatch => {
 
 export const getDownlod = () => async dispatch => {
   try {
-    /* Downloading the file from the urlPath in the database and saving it in the local directory. */
-    database()
-      .ref('/config/urlPath')
-      .once('value')
-      .then(snapshot => {
+    firestore()
+      .collection('config')
+      .doc('VneqyZytPyeySZsohS6l')
+      .get()
+      .then(querySnapshot => {
         const localDirectory = `${RNFS.DocumentDirectoryPath}`;
 
         RNFS.exists(localDirectory + '/' + `${version}.apk`).then(fileExist => {
@@ -104,7 +114,7 @@ export const getDownlod = () => async dispatch => {
             dispatch(isDownload({setDownload: true}));
 
             const downloadFile = {
-              fromUrl: snapshot.val(),
+              fromUrl: querySnapshot.get('Path'),
               toFile: localDirectory + '/' + `${version}.apk`,
               begin: async res => {
                 dispatch(

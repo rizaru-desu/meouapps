@@ -4,17 +4,16 @@ import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {
-  configureFonts,
-  MD3LightTheme,
-  Portal,
-  Provider as PaperProvider,
-} from 'react-native-paper';
-
+/* Importing the store from the store.js file. */
 import {store} from './assets/configs/store';
+
+/* Importing the routes.js file. */
 import Routes from './assets/configs/routes';
+
+/* Importing the refNavigation.js file. */
 import {RefNavigation} from './assets/configs/refNavigation';
-import {fontConfig} from './assets/configs/configFonts';
+
+import {MobileAds} from 'react-native-google-mobile-ads';
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +21,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    MobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.tron.log(adapterStatuses);
+      });
+
     if (__DEV__) {
       import('./assets/configs/configTotron').then(() =>
         console.tron.log('Reactotron Configured'),
@@ -30,20 +35,12 @@ class App extends Component {
   }
 
   render() {
-    const theme = {
-      ...MD3LightTheme,
-      fonts: configureFonts({config: fontConfig}),
-    };
     return (
-      <PaperProvider theme={theme}>
-        <Portal>
-          <Provider store={store}>
-            <NavigationContainer ref={RefNavigation}>
-              <Routes />
-            </NavigationContainer>
-          </Provider>
-        </Portal>
-      </PaperProvider>
+      <Provider store={store}>
+        <NavigationContainer ref={RefNavigation}>
+          <Routes />
+        </NavigationContainer>
+      </Provider>
     );
   }
 }

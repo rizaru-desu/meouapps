@@ -1,4 +1,8 @@
 {
   "name": "meou",
-  "displayName": "meou"
+  "displayName": "meou",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-9341343436751788~8460479374",
+    "ios_app_id": "ca-app-pub-9341343436751788~8460479374"
+  }
 }
